@@ -1,14 +1,34 @@
-import React from 'react';
-import { StyleSheet, Button, View, Text } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+import Games from './Games';
 
 export default function Home({ navigation }) {
+  const [scores, setScores] = useState([0, 0]);
+  const gamesElem = useRef(null);
+  const handleUserTouch = (playerNum) => {
+    const newScores = [...scores];
+    if (gamesElem.current.checkReactor()) {
+      newScores[playerNum]++;
+    } else {
+      newScores[playerNum]--;
+    }
+    setScores(newScores);
+  };
   return (
     <View style={styles.container}>
-        <Text>Home Screen</Text>
-        <Button 
-            onPress={() => navigation.navigate('Game')}
-            title="Press To Go Game"
-        />
+      <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
+        <View style={styles.playerWrapper}>
+          <Text style={styles.score}>{scores[0]}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+      <View style={styles.gameWrapper}>
+        <Games ref={gamesElem} />
+      </View>
+      <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
+        <View style={styles.playerWrapper}>
+          <Text style={styles.score}>{scores[1]}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -16,8 +36,23 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#9e9e9e',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  gameWrapper: {
+    flexGrow: 2,
+    width: '100%',
+    backgroundColor: '#212121'
+  },
+  playerWrapper: {
+    flexGrow: 1,
+    width: '100%',
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  score: {
+    fontSize: 25
+  }
 });
