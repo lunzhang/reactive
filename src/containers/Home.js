@@ -4,15 +4,18 @@ import Games from './Games';
 
 export default function Home({ navigation }) {
   const [scores, setScores] = useState([0, 0]);
+  const [gameType, setGameType] = useState('');
   const gamesElem = useRef(null);
   const handleUserTouch = (playerNum) => {
-    const newScores = [...scores];
-    if (gamesElem.current.checkReactor()) {
-      newScores[playerNum]++;
-    } else {
-      newScores[playerNum]--;
+    if (gameType) {
+      const newScores = [...scores];
+      if (gamesElem.current.checkReactor()) {
+        newScores[playerNum]++;
+      } else {
+        newScores[playerNum]--;
+      }
+      setScores(newScores);
     }
-    setScores(newScores);
   };
   return (
     <View style={styles.container}>
@@ -22,7 +25,7 @@ export default function Home({ navigation }) {
         </View>
       </TouchableWithoutFeedback>
       <View style={styles.gameWrapper}>
-        <Games ref={gamesElem} />
+        <Games ref={gamesElem} gameType={gameType} />
       </View>
       <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
         <View style={styles.playerWrapper}>

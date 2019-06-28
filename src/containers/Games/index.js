@@ -2,8 +2,7 @@ import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react'
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import WhenWhite from './WhenWhite';
 
-function Games({ }, ref) {
-    const [gameType, setGameType] = useState('');
+function Games({ gameType }, ref) {
     const gameElem = useRef(null);
     const renderGame = () => {
         switch (gameType) {
