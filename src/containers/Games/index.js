@@ -1,6 +1,7 @@
 import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import WhenWhite from './WhenWhite';
+import Loading from './Loadinng';
 
 function Games({ gameType }, ref) {
     const gameElem = useRef(null);
@@ -10,7 +11,7 @@ function Games({ gameType }, ref) {
                 return <WhenWhite ref={gameElem} />;
             }
             default: {
-                return null;
+                return <Loading ref={gameElem} />;
             }
         }
     };
