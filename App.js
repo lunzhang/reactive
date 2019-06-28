@@ -6,8 +6,8 @@ import Game from './src/containers/Game';
 StatusBar.setHidden(true);
 
 const MainNavigator = createStackNavigator({
-  Home: { screen: Home },
   Game: { screen: Game },
+  Home: { screen: Home },
 },{
   headerMode: 'none'
 });
