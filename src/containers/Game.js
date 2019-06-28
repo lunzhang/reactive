@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { GREY_COLOR, DARK_COLOR } from '../constants';
 import Games from './Games';
 
 export default function Game({ navigation }) {
@@ -39,14 +40,14 @@ export default function Game({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#9e9e9e',
+    backgroundColor: GREY_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
   },
   gameWrapper: {
     flexGrow: 2,
     width: '100%',
-    backgroundColor: '#212121'
+    backgroundColor: DARK_COLOR
   },
   playerWrapper: {
     flexGrow: 1,
