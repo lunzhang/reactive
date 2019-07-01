@@ -1,16 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
-import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME } from '../constants';
+import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME, REVERSE_TRANSFORM } from '../constants';
 import Games from './Games';
 
 export default function Game({ navigation }) {
   const [scores, setScores] = useState([0, 0]);
   const [gameType, setGameType] = useState('');
-  const gamesElem = useRef(null);
-  useEffect(() => {
+  const [gamesCount, setGamesCount] = useState(0);
+  const playGame = () => {
     setTimeout(() => {
       setGameType(WHEN_WHITE_GAME);
-    }, 1000);
+    }, 500);
+  };
+  const gamesElem = useRef(null);
+  useEffect(() => {
+    playGame();
   }, []);
   const handleUserTouch = (playerNum) => {
     if (gameType && gameType !== LOADING_GAME) {
@@ -21,14 +25,16 @@ export default function Game({ navigation }) {
         newScores[playerNum]--;
       }
       setScores(newScores);
+      setGamesCount(gamesCount + 1);
       setGameType(LOADING_GAME);
+      playGame();
     }
   };
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
         <View style={styles.playerWrapper}>
-          <Text style={styles.score}>{scores[0]}</Text>
+          <Text style={{ ...styles.score, transform: REVERSE_TRANSFORM }}>{scores[0]}</Text>
         </View>
       </TouchableWithoutFeedback>
       <View style={styles.gameWrapper}>

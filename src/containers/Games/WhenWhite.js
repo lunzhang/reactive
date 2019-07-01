@@ -4,14 +4,18 @@ import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
 
 function WhenWhite({ }, ref) {
     const [isWhite, setIsWhite] = useState(false);
+    let timeOut;
     const play = () => {
         const time = (Math.random() * 3 + 1) * 1000;
-        setTimeout(() => {
+        timeOut = setTimeout(() => { 
             setIsWhite(true);
         }, time);
     };
     useEffect(() => {
         play();
+        return () => {
+            clearTimeout(timeOut);
+        };
     }, []);
     useImperativeHandle(ref, () => ({
         play: play,
