@@ -3,6 +3,10 @@ import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME, REVERSE_TRANSFORM } from '../constants';
 import Games from './Games';
 
+const descriptions = {
+  WHEN_WHITE_GAME: 'Tap when white'
+};
+
 export default function Game({ navigation }) {
   const [scores, setScores] = useState([0, 0]);
   const [gameType, setGameType] = useState('');
@@ -34,6 +38,7 @@ export default function Game({ navigation }) {
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
         <View style={styles.playerWrapper}>
+          <Text style={{ ...styles.description, bottom: '5%', left: '5%', transform: REVERSE_TRANSFORM }}>{descriptions[gameType]}</Text>
           <Text style={{ ...styles.score, transform: REVERSE_TRANSFORM }}>{scores[0]}</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -42,6 +47,7 @@ export default function Game({ navigation }) {
       </View>
       <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
         <View style={styles.playerWrapper}>
+          <Text style={{ ...styles.description, top: '5%', right: '5%' }}>{descriptions[gameType]}</Text>
           <Text style={styles.score}>{scores[1]}</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -62,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: DARK_COLOR
   },
   playerWrapper: {
+    position: 'relative',
     flexGrow: 1,
     width: '100%',
     display: 'flex',
@@ -69,6 +76,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   score: {
-    fontSize: 25
+    fontSize: 25,
+  },
+  description: {
+    position: 'absolute', 
+    fontSize: 18
   }
 });
