@@ -1,23 +1,19 @@
-import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
-import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import WhenWhite from './WhenWhite';
 import Loading from './Loading';
 
-function Games({ gameType }, ref) {
-    const gameElem = useRef(null);
+function Games({ gameType, gameRef }) {
     const renderGame = () => {
         switch (gameType) {
             case 'when-white': {
-                return <WhenWhite ref={gameElem} />;
+                return <WhenWhite ref={gameRef} />;
             }
             default: {
-                return <Loading ref={gameElem} />;
+                return <Loading ref={gameRef} />;
             }
         }
     };
-    useImperativeHandle(ref, () => ({
-        checkReactor: gameElem.current.checkReactor
-    }));
     return (
         <View style={styles.container}>
             {renderGame()}
@@ -32,4 +28,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default forwardRef(Games);
+export default Games;

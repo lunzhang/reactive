@@ -26,7 +26,7 @@ export default function Game({ navigation }) {
         </View>
       </TouchableWithoutFeedback>
       <View style={styles.gameWrapper}>
-        <Games ref={gamesElem} gameType={gameType} />
+        <Games gameRef={gamesElem} gameType={gameType} />
       </View>
       <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
         <View style={styles.playerWrapper}>
