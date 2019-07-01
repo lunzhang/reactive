@@ -5,14 +5,17 @@ import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
 function WhenWhite({ }, ref) {
     const [isWhite, setIsWhite] = useState(false);
     useImperativeHandle(ref, () => ({
-        checkReactor: () => isWhite
+        checkReactor: () => isWhite,
+        play: () => {
+            const time = (Math.random() * 5 + 1) * 1000;
+            setTimeout(() => {
+                setIsWhite(true);
+            }, time);
+        },
+        restart: () => {
+            setIsWhite(false);
+        }
     }));
-    useEffect(() => {
-        const time = (Math.random() * 5 + 1) * 1000;
-        setTimeout(() => {
-            setIsWhite(true);
-        }, time);
-    }, []);
     return (
         <View style={`${styles.containner} ${isWhite ? styles.white : ''}`}>
         </View>
