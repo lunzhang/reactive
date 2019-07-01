@@ -1,13 +1,17 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { WHEN_WHITE_GAME, LOADING_GAME } from '../../constants';
 import WhenWhite from './WhenWhite';
 import Loading from './Loading';
 
 function Games({ gameType, gameRef }) {
     const renderGame = () => {
         switch (gameType) {
-            case 'when-white': {
+            case WHEN_WHITE_GAME: {
                 return <WhenWhite ref={gameRef} />;
+            }
+            case LOADING_GAME: {
+                return <Loading ref={gameRef} />;
             }
             default: {
                 return <Loading ref={gameRef} />;
@@ -24,7 +28,8 @@ function Games({ gameType, gameRef }) {
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        flexGrow: 1
+        flexGrow: 1,
+        flexBasis: 0,
     }
 });
 

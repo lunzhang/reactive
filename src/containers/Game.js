@@ -1,12 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
-import { GREY_COLOR, DARK_COLOR } from '../constants';
+import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME } from '../constants';
 import Games from './Games';
 
 export default function Game({ navigation }) {
   const [scores, setScores] = useState([0, 0]);
   const [gameType, setGameType] = useState('');
   const gamesElem = useRef(null);
+  useEffect(() => {
+    setTimeout(() => {
+      setGameType(WHEN_WHITE_GAME);
+    }, 1000);
+  }, []);
   const handleUserTouch = (playerNum) => {
     if (gameType) {
       const newScores = [...scores];
@@ -16,6 +21,7 @@ export default function Game({ navigation }) {
         newScores[playerNum]--;
       }
       setScores(newScores);
+      setGameType(LOADING_GAME);
     }
   };
   return (

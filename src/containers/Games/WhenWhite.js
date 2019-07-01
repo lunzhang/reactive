@@ -4,20 +4,24 @@ import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
 
 function WhenWhite({ }, ref) {
     const [isWhite, setIsWhite] = useState(false);
+    const play = () => {
+        const time = (Math.random() * 3 + 1) * 1000;
+        setTimeout(() => {
+            setIsWhite(true);
+        }, time);
+    };
+    useEffect(() => {
+        play();
+    }, []);
     useImperativeHandle(ref, () => ({
+        play: play,
         checkReactor: () => isWhite,
-        play: () => {
-            const time = (Math.random() * 5 + 1) * 1000;
-            setTimeout(() => {
-                setIsWhite(true);
-            }, time);
-        },
         restart: () => {
             setIsWhite(false);
         }
     }));
     return (
-        <View style={`${styles.containner} ${isWhite ? styles.white : ''}`}>
+        <View style={{ ...styles.container, backgroundColor: isWhite && LIGHT_COLOR }}>
         </View>
     );
 };
@@ -28,9 +32,6 @@ const styles = StyleSheet.create({
       backgroundColor: DARK_COLOR,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    white: {
-        backgroundColor: LIGHT_COLOR
     }
   });
 
