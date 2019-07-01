@@ -13,7 +13,7 @@ export default function Game({ navigation }) {
     }, 1000);
   }, []);
   const handleUserTouch = (playerNum) => {
-    if (gameType) {
+    if (gameType && gameType !== LOADING_GAME) {
       const newScores = [...scores];
       if (gamesElem.current.checkReactor()) {
         newScores[playerNum]++;

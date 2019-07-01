@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
 
 function Loading({ }, ref) {
@@ -8,7 +8,7 @@ function Loading({ }, ref) {
     }));
     return (
         <View style={styles.container}>
-            <Text style={{ color: LIGHT_COLOR }}>Loading</Text>
+            <ActivityIndicator size="large" color={LIGHT_COLOR} />
         </View>
     );
 };
