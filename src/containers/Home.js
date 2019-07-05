@@ -9,7 +9,7 @@ export default function Home({ navigation }) {
   const handleUserTouch = (playerNum) => {
     if (gameType) {
       const newScores = [...scores];
-      if (gamesElem.current.checkReactor()) {
+      if (gamesElem.current.isWin()) {
         newScores[playerNum]++;
       } else {
         newScores[playerNum]--;

@@ -19,7 +19,7 @@ function WhenWhite({ }, ref) {
     }, []);
     useImperativeHandle(ref, () => ({
         play: play,
-        checkReactor: () => isWhite,
+        isWin: () => isWhite,
         restart: () => {
             setIsWhite(false);
         }
@@ -32,11 +32,11 @@ function WhenWhite({ }, ref) {
 
 const styles = StyleSheet.create({
     container: {
-      flexGrow: 1,
-      backgroundColor: DARK_COLOR,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flexGrow: 1,
+        backgroundColor: DARK_COLOR,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
-  });
+});
 
 export default forwardRef(WhenWhite);

@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME, REVERSE_TRANSFORM } from '../constants';
+import { 
+  GREY_COLOR, DARK_COLOR, REVERSE_TRANSFORM,
+  COUNT_DOWN_GAME, WHEN_WHITE_GAME, LOADING_GAME,
+} from '../constants';
 import Games from './Games';
 
 const descriptions = {
@@ -15,7 +18,7 @@ export default function Game({ navigation }) {
   const [winner, setWinner] = useState(false);
   const playGame = () => {
     setTimeout(() => {
-      setGameType(WHEN_WHITE_GAME);
+      setGameType(COUNT_DOWN_GAME);
     }, 500);
   };
   const gamesElem = useRef(null);
@@ -25,7 +28,7 @@ export default function Game({ navigation }) {
   const handleUserTouch = (playerNum) => {
     if (gameType && gameType !== LOADING_GAME) {
       const newScores = [...scores];
-      if (gamesElem.current.checkReactor()) {
+      if (gamesElem.current.isWin()) {
         newScores[playerNum]++;
       } else {
         newScores[playerNum]--;

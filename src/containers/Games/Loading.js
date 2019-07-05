@@ -4,7 +4,7 @@ import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
 
 function Loading({ }, ref) {
     useImperativeHandle(ref, () => ({
-        checkReactor: () => {}
+        isWin: () => {}
     }));
     return (
         <View style={styles.container}>
