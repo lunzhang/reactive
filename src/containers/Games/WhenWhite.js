@@ -6,7 +6,7 @@ function WhenWhite({ }, ref) {
     const [isWhite, setIsWhite] = useState(false);
     let timeOut;
     const play = () => {
-        const time = (Math.random() * 3 + 1) * 1000;
+        const time = (Math.random() * 3000) + 100;
         timeOut = setTimeout(() => { 
             setIsWhite(true);
         }, time);

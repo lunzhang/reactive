@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { GREY_COLOR, DARK_COLOR, WHEN_WHITE_GAME, LOADING_GAME, REVERSE_TRANSFORM } from '../constants';
 import Games from './Games';
 
@@ -10,7 +11,8 @@ const descriptions = {
 export default function Game({ navigation }) {
   const [scores, setScores] = useState([0, 0]);
   const [gameType, setGameType] = useState('');
-  const [gamesCount, setGamesCount] = useState(0);
+  const [gamesCount, setGamesCount] = useState(1);
+  const [winner, setWinner] = useState(false);
   const playGame = () => {
     setTimeout(() => {
       setGameType(WHEN_WHITE_GAME);
@@ -32,54 +34,93 @@ export default function Game({ navigation }) {
       setGamesCount(gamesCount + 1);
       setGameType(LOADING_GAME);
       playGame();
+      if (gamesCount === 10) {
+        setWinner(true);
+      }
     }
+  };
+  const restart = () => {
+    setScores([0, 0]);
+    setGamesCount(1);
+    setWinner(false);
+    playGame();
   };
   return (
     <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
-        <View style={styles.playerWrapper}>
-          <Text style={{ ...styles.description, bottom: '5%', left: '5%', transform: REVERSE_TRANSFORM }}>{descriptions[gameType]}</Text>
-          <Text style={{ ...styles.score, transform: REVERSE_TRANSFORM }}>{scores[0]}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-      <View style={styles.gameWrapper}>
-        <Games gameRef={gamesElem} gameType={gameType} />
-      </View>
-      <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
-        <View style={styles.playerWrapper}>
-          <Text style={{ ...styles.description, top: '5%', right: '5%' }}>{descriptions[gameType]}</Text>
-          <Text style={styles.score}>{scores[1]}</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      {
+        winner ? 
+        <Fragment>
+          <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
+            <Text>{scores[1] < scores[0] ? 'You Win' : 'You Lose'}</Text>
+          </View>
+          <TouchableWithoutFeedback onPress={restart}>
+            <View style={{ ...styles.gameWrapper, justifyContent: 'center', alignItems: 'center' }}>
+              <Ionicons name="md-refresh" size={64} color="white" />
+            </View>
+          </TouchableWithoutFeedback>
+          <View style={styles.playerWrapper}>
+          <Text>{scores[1] > scores[0] ? 'You Win' : 'You Lose'}</Text>
+          </View>
+        </Fragment> :
+        <Fragment>
+          <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
+            <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
+              <Text style={styles.description}>{descriptions[gameType]}</Text>
+              <Text style={styles.score}>{scores[0]}</Text>
+              <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
+            </View>
+            </TouchableWithoutFeedback>
+            <View style={styles.gameWrapper}>
+              <Games gameRef={gamesElem} gameType={gameType} />
+            </View>
+            <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
+            <View style={styles.playerWrapper}>
+              <Text style={styles.description}>{descriptions[gameType]}</Text>
+              <Text style={styles.score}>{scores[1]}</Text>
+              <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </Fragment>
+      }
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: GREY_COLOR,
     justifyContent: 'center',
     alignItems: 'center'
   },
   gameWrapper: {
-    flexGrow: 2,
+    flexGrow: 3,
     width: '100%',
-    backgroundColor: DARK_COLOR
+    backgroundColor: DARK_COLOR,
+    flexBasis: 0,
   },
   playerWrapper: {
     position: 'relative',
-    flexGrow: 1,
+    flexGrow: 2,
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexBasis: 0,
   },
   score: {
     fontSize: 25,
   },
   description: {
     position: 'absolute', 
-    fontSize: 18
+    fontSize: 18,
+    top: '5%',
+    left: '5%',
+  },
+  gamesCount: {
+    position: 'absolute', 
+    fontSize: 18,
+    bottom: '5%',
+    right: '5%',
   }
 });

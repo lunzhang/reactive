@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexGrow: 1,
-        flexBasis: 0,
     }
 });
 
