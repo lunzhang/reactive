@@ -8,7 +8,14 @@ import {
 import Games from './Games';
 
 const descriptions = {
-  WHEN_WHITE_GAME: 'Tap when white'
+  WHEN_WHITE_GAME: 'Tap when white',
+  COUNT_DOWN_GAME: 'Tap when number goes to 0',
+};
+
+const randomGame = () => {
+  const games = [COUNT_DOWN_GAME, WHEN_WHITE_GAME];
+  const index = Math.floor(Math.random() * games.length);
+  return games[index];
 };
 
 export default function Game({ navigation }) {
@@ -18,7 +25,7 @@ export default function Game({ navigation }) {
   const [winner, setWinner] = useState(false);
   const playGame = () => {
     setTimeout(() => {
-      setGameType(COUNT_DOWN_GAME);
+      setGameType(randomGame());
     }, 500);
   };
   const gamesElem = useRef(null);
