@@ -55,42 +55,46 @@ export default function Game({ navigation }) {
     setWinner(false);
     playGame();
   };
+  const renderWinnerState = () => (
+    <Fragment>
+      <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
+        <Text>{scores[1] < scores[0] ? 'You Win' : 'You Lose'}</Text>
+      </View>
+      <TouchableWithoutFeedback onPress={restart}>
+        <View style={{ ...styles.gameWrapper, justifyContent: 'center', alignItems: 'center' }}>
+          <Ionicons name="md-refresh" size={64} color="white" />
+        </View>
+      </TouchableWithoutFeedback>
+      <View style={styles.playerWrapper}>
+        <Text>{scores[1] > scores[0] ? 'You Win' : 'You Lose'}</Text>
+      </View>
+    </Fragment>
+  );
+  const renderGameState = () => (
+    <Fragment>
+      <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
+        <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
+          <Text style={styles.description}>{descriptions[gameType]}</Text>
+          <Text style={styles.score}>{scores[0]}</Text>
+          <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
+        </View>
+        </TouchableWithoutFeedback>
+        <View style={styles.gameWrapper}>
+          <Games gameRef={gamesElem} gameType={gameType} />
+        </View>
+        <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
+        <View style={styles.playerWrapper}>
+          <Text style={styles.description}>{descriptions[gameType]}</Text>
+          <Text style={styles.score}>{scores[1]}</Text>
+          <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </Fragment>
+  );
   return (
     <View style={styles.container}>
       {
-        winner ? 
-        <Fragment>
-          <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
-            <Text>{scores[1] < scores[0] ? 'You Win' : 'You Lose'}</Text>
-          </View>
-          <TouchableWithoutFeedback onPress={restart}>
-            <View style={{ ...styles.gameWrapper, justifyContent: 'center', alignItems: 'center' }}>
-              <Ionicons name="md-refresh" size={64} color="white" />
-            </View>
-          </TouchableWithoutFeedback>
-          <View style={styles.playerWrapper}>
-          <Text>{scores[1] > scores[0] ? 'You Win' : 'You Lose'}</Text>
-          </View>
-        </Fragment> :
-        <Fragment>
-          <TouchableWithoutFeedback onPress={() => handleUserTouch(0)}>
-            <View style={{ ...styles.playerWrapper, transform: REVERSE_TRANSFORM }}>
-              <Text style={styles.description}>{descriptions[gameType]}</Text>
-              <Text style={styles.score}>{scores[0]}</Text>
-              <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
-            </View>
-            </TouchableWithoutFeedback>
-            <View style={styles.gameWrapper}>
-              <Games gameRef={gamesElem} gameType={gameType} />
-            </View>
-            <TouchableWithoutFeedback onPress={() => handleUserTouch(1)}>
-            <View style={styles.playerWrapper}>
-              <Text style={styles.description}>{descriptions[gameType]}</Text>
-              <Text style={styles.score}>{scores[1]}</Text>
-              <Text style={styles.gamesCount}>{gamesCount} / 10</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </Fragment>
+        winner ? renderWinnerState() : renderGameState()
       }
     </View>
   );
