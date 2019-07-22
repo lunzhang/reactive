@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   description: {
     position: 'absolute', 
-    fontSize: 18,
+    fontSize: 20,
     top: '5%',
     left: '5%',
   },

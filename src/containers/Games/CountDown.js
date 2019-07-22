@@ -1,6 +1,6 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { DARK_COLOR, LIGHT_COLOR } from '../../constants';
+import { DARK_COLOR, LIGHT_COLOR, REVERSE_TRANSFORM } from '../../constants';
 
 let hideTime;
 
@@ -37,9 +37,16 @@ function CountDown({ }, ref) {
     }));
     return (
         <View style={styles.container}>
-            <Text style={{ color: LIGHT_COLOR }}>
-                {hide ? '?' : time}
-            </Text>
+            <View style={styles.timeWrapper}>
+                <Text style={{ ...styles.time, transform: REVERSE_TRANSFORM }}>
+                    {hide ? '?' : time}
+                </Text>
+            </View>
+            <View style={styles.timeWrapper}>
+                <Text style={styles.time}>
+                    {hide ? '?' : time}
+                </Text>
+            </View>
         </View>
     );
 };
@@ -48,9 +55,17 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         backgroundColor: DARK_COLOR,
-        justifyContent: 'center',
         alignItems: 'center',
-    }
+        display: 'flex',
+    },
+    timeWrapper: {
+        flexGrow: 1,
+        justifyContent: 'center'
+    },
+    time: {
+        color: LIGHT_COLOR,
+        fontSize: 32,
+    },
 });
 
 export default forwardRef(CountDown);
