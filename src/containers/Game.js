@@ -4,17 +4,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { 
   GREY_COLOR, DARK_COLOR, REVERSE_TRANSFORM,
   COUNT_DOWN_GAME, WHEN_WHITE_GAME, SAD_FACE_GAME, LOADING_GAME,
+  COLOR_TEXT_GAME,
 } from '../constants';
 import Games from './Games';
 
 const descriptions = {
+  COLOR_TEXT_GAME: 'Tap when the color and text match',
   SAD_FACE_GAME: 'Tap when there is a sad face',
   WHEN_WHITE_GAME: 'Tap when white',
   COUNT_DOWN_GAME: 'Tap when number goes to 0',
 };
 
 const randomGame = () => {
-  const games = [COUNT_DOWN_GAME, WHEN_WHITE_GAME, SAD_FACE_GAME];
+  const games = [COUNT_DOWN_GAME, WHEN_WHITE_GAME, SAD_FACE_GAME, COLOR_TEXT_GAME];
   const index = Math.floor(Math.random() * games.length);
   return games[index];
 };
